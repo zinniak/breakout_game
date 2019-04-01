@@ -256,7 +256,7 @@ class Game(object):
         self.game_window = game_window
         self.hit_count = 0
 
-        self.balls = [Ball(img_file= ball_img,
+        self.balls = [Ball(img_file= ball_img[0],
                          initial_x= self.width/2,
                          initial_y = self.height/2,
                          game=self)
@@ -298,7 +298,6 @@ class Game(object):
                 brick_y = brick_y - brick_height
             brick_x = brick_x - brick_height
 
-
         self.game_objects = self.walls + self.bricks + self.paddles + self.balls
 
     def update(self,pressed_keys):
@@ -337,13 +336,22 @@ class Game(object):
         self.hit_count += 1
         if (self.hit_count % 10) == 0:
             print("speeding up")
+            # print(self.hit_count)
+            # print(type(self.game_objects))
             for ball in self.balls:
-                ball.velocity += 2
+                ball.velocity += 1
+
+        # creative element: A second ball appears after 50 bricks have been broken
+        if self.hit_count == 50:
+            ball_img = pyglet.resource.image('ball2.png')
+
             self.balls.append(Ball(img_file= ball_img,
-                             initial_x= self.width/2,
-                             initial_y = self.height/2,
+                             initial_x= 50,
+                             initial_y = 40,
                              game=self)
                           )
+
+            self.game_objects = self.game_objects + self.balls
 
 
 class GameWindow(pyglet.window.Window):
@@ -435,7 +443,8 @@ def debug_print(string):
 
 def main():
     debug_print("Initializing window...")
-    ball_img = pyglet.resource.image('ball.png')
+    ball_img = [pyglet.resource.image('ball.png'),
+                pyglet.resource.image('ball2.png')]
     # ball_img = pyglet.resource.image('vertical_wall.png')
     paddle_imgs = [pyglet.resource.image('paddle1.png'),
                    pyglet.resource.image('paddle2.png')]
