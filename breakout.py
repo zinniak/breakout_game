@@ -342,7 +342,7 @@ class Game(object):
                 ball.velocity += 1
 
         # creative element: A second ball appears after 50 bricks have been broken
-        if self.hit_count == 50:
+        if self.hit_count == 40:
             ball_img = pyglet.resource.image('ball2.png')
 
             self.balls.append(Ball(img_file= ball_img,
