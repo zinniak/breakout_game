@@ -341,16 +341,14 @@ class Game(object):
             for ball in self.balls:
                 ball.velocity += 1
 
-        # creative element: A second ball appears after 50 bricks have been broken
-        if self.hit_count == 40:
+        # creative element: A second ball appears after 25 consecutive bricks have been broken
+        if self.hit_count == 25:
             ball_img = pyglet.resource.image('ball2.png')
-
             self.balls.append(Ball(img_file= ball_img,
                              initial_x= 50,
                              initial_y = 40,
                              game=self)
                           )
-
             self.game_objects = self.game_objects + self.balls
 
 
